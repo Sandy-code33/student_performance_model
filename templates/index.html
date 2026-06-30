@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <style>
+        body{
+            background-color: #f5f5f5;
+        }
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .result-pass {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .result-fail {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .container{
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container col-md-4 mt-5">
+        <h1 class="text-success text-center fw-bold p-2">Student Performance Prediction</h1>
+        <form action="/" method="post">
+        <div class="mt-3">
+        <label class="form-label fs-bold">Enter student study hours:</label>
+        <input class="form-control" type="text" id="hours_studied" name="hours_studied" placeholder="Enter study hours.. eg: 65" value="{{ hours_studied or '' }}">
+        </div>
+        <div class="mt-3">
+        <label class="form-label fs-bold">Student attendance:</label>
+        <input class="form-control" type="text" id="attendance" name="attendance" placeholder="Enter attendance.. eg: 85" value="{{ attendance or '' }}">
+        </div>
+        <div class="mt-3">
+        <label class="form-label fs-bold">Student sleep hours:</label>
+        <input class="form-control" type="text" id="sleep_hours" name="sleep_hours" placeholder="Enter sleep hours.. eg: 7" value="{{ sleep_hours or '' }}">
+        </div>
+        <div class="mt-3">
+        <label class="form-label fs-bold">Parental education level:</label>
+        <select class="form-control" id="Parental_Education" name="Parental_Education">
+            <option value="0" {% if Parental_Education == 0 %}selected{% endif %}>High School</option>
+            <option value="1" {% if Parental_Education == 1 %}selected{% endif %}>Bachelor's</option>
+            <option value="2" {% if Parental_Education == 2 %}selected{% endif %}>Master's</option>
+            <option value="3" {% if Parental_Education == 3 %}selected{% endif %}>PhD</option>
+        </select>
+        </div>
+        <div class="mt-3">
+        <label class="form-label fs-bold">Extra activities:</label>
+        <select class="form-control" id="Extra_Activities" name="Extra_Activities">
+            <option value="0" {% if Extra_Activities == 0 %}selected{% endif %}>No</option>
+            <option value="1" {% if Extra_Activities == 1 %}selected{% endif %}>Yes</option>
+        </select>
+        </div>
+        <div class="mt-3">
+        <label class="form-label fs-bold">Previous score:</label>
+        <input class="form-control" type="text" id="Previous_Score" name="Previous_Score" placeholder="Enter previous score.. eg: 85" value="{{ Previous_Score or '' }}">
+        </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button class="btn btn-primary mt-3" type="submit" id="submit">Predict</button>
+            <a href="/" class="btn btn-success mt-3" type="button">Try another</a>
+            </div>
+        </form>
+
+        {% if prediction %}
+        <div class="result-section {% if prediction == 'Pass' %}result-pass{% else %}result-fail{% endif %}">
+            <h3 class="mb-3">🎯 Prediction Result</h3>
+            <h2 class="mb-3"><strong>{{ prediction }}</strong></h2>
+            <p class="fs-5"><strong>Advice:</strong> {{ advice }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
